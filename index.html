@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaHub - Tu catálogo de mangas</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <!--Font Awesome (Sola para iconos)-->
+</head>
+
+<body>
+    <header class="site header">
+        <div class="container header-inner">
+            <a href="#" class="brand">MangaHub</a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#catalog">Catálogo</a></li>
+                    <li><a href="#news">Novedades</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                </ul>
+            </nav>
+
+
+            <div class="header-actions">
+                <button class="icon-btn" id="search-btn" aria-label="buscar"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="hamburger" id="hamburger" aria-label="menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+            </button>
+
+            <!--small search area (togglable)-->
+            <div class="search-bar" id="search-bar" hidden>
+                <div class="container">
+                    <input type="search" id="search-input" placeholder="Buscar mangas, autores..." />
+                </div>
+            </div>
+    </header>
+
+    <main>
+        <!-- HERO / HOME -->
+        <section id="home" class="hero-section">
+            <div class="container hero-inner">
+                <div class="hero-text">
+                    <h1>MangaHub</h1>
+                    <p>Descubre, colecciona y sigue tus mangas favoritos - Novedades, recomendaciones y galerías. </p>
+                    <a class="btn-primary" href="#catalog"> Explorar catálogo</a>
+
+                </div>
+                <div class="hero-card">
+                    <img src="img/Boku no Hero Academia Logo.jpg" alt="manga hero" />
+
+
+                </div>
+            </div>
+        </section>
+
+        <!--Catalogo / Gallery (10+ imagen)-->
+        <section id="catalog" class="catalog-section">
+            <div class="container section-header">
+                <h2>Catálogo destacado</h2>
+                <p>Seleccionados por la comunidad</p>
+            </div>
+
+
+            <div class="container gallery-grid" id="gallery-grid">
+                <!--10 images: cada item tiene data-src para ampliar en modal-->
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/39/90/d9/3990d9a269712084403bd71e4a07563c.jpg"
+                    data-tittle="Manga #1">
+                    <img src="img/Tokyo Ghoul Television Show Season 2 at Tonyajohnson.jpg">
+                    <div class="gallery-meta">
+                        <h3>Tokyo Ghoul #1</h3>
+                        <p>Autor: Sui Ishida</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/26/4e/c9/264ec9d43fb4c2c4fbc0a976b42cb05a.jpg"
+                    data-tittle="Manga #2">
+                    <h3>Fullmetal Alchemist #2</h3>
+                    <img src="img/Fullmetal Alchemist (Original Series) - fab faux poster created by gossymer.jpg"
+                        alt="Manga 2" class="gallery-meta">
+                    <p>Autor: Hiromu Arakawa</p>
+
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/81/c7/9c/81c79cb8cfcb320fb7890403fc9bc81d.jpg"
+                    data-tittle="Manga #3">
+                    <img src="img/Kimetsu no Yaiba.jpg" alt="Manga 3">
+                    <div class="gallery-meta">
+                        <h3>Kimetsu no yaiba #3</h3>
+                        <p>Autor: Koyoharu Gotouge</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/f1/e0/c7/f1e0c7f57ebd3836da589a31713a2ac7.jpg"
+                    data-tittle="Manga #4">
+                    <img src="img/Bleach.jpg" alt="Manga 4">
+                    <div class="gallery-meta">
+                        <h3>Bleach #4</h3>
+                        <p>Autor: Tite Kubo</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/ec/2d/c9/ec2dc9d709fb63ae1172950a1b5530f2.jpg"
+                    data-tittle="Manga #5">
+                    <img src="img/One piece.jpg" alt="Manga 5">
+                    <div class="gallery-meta">
+                        <h3>One piece #5</h3>
+                        <p>Autor: Eiichirō Oda</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/97/73/dd/9773dd474d63e881b4b55ac841f9d25d.jpg"
+                    data-tittle="Manga #6">
+                    <img src="img/88eb4bc5-7906-4d99-a21e-e93578c22215.jpg" alt="Manga 6">
+                    <div class="gallery-meta">
+                        <h3> Naruto #6</h3>
+                        <p>Autor: Masashi Kishimoto</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/d1/ec/56/d1ec56eaea2b1f7fb17834880083b383.jpg">
+
+                    <img src="img/Dragonball Z.jpg" alt="Manga 7">
+                    <div class="gallery-meta">
+                        <h3>Dragón Ball #7</h3>
+                        <p>Autor: Akira Toriyama</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/de/97/e0/de97e0ffec6eced91f4a241429b7df6d.jpg"
+                    data-tittle="Manga #8">
+                    <img src="img/Code Geass-Lelouch of the….jpg" alt="Manga 8">
+                    <div class="gallery-meta">
+                        <h3>Code Geass #8</h3>
+                        <p>Autor: Ichirō ōkouchi</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/b7/9f/c9/b79fc9c88952fd42ca2f29c1f1c3d4a7.jpg"
+                    data-tittle="Manga #9">
+
+                    <img src="img/aa61d469-ff27-4415-b820-c2a903da4fbe.jpg" alt="Manga 9">
+                    <div class="gallery-meta">
+                        <h3>Fairy Tail #9</h3>
+                        <p>Autor: Hiro Mashima</p>
+
+                    </div>
+                </article>
+
+                <article class="gallery-item" tabindex="0"
+                    data-src="https://i.pinimg.com/736x/e0/eb/e2/e0ebe2ed39b39007a29b851359976271.jpg"
+                    data-tittle="Manga #10">
+                    <img src="img/ba148c68-39dc-4334-b28a-fdf32088b7df.jpg" alt="Manga 10">
+                    <div class="gallery-meta">
+                        <h3>Another #10</h3>
+                        <p>Autor: Yukito Ayatsuji</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- News / third section -->
+        <section id="news" class="news-section">
+            <div class="container section-header">
+                <h2>Novedades</h2>
+                <p>Últimos lanzamientos y reseñas</p>
+            </div>
+
+            <div class="container news-grid">
+                <article class="news-card">
+                    <h3>Nueva edición de 'Aventura Neo'</h3>
+                    <p>La edición limitada incluye póster y extras.</p>
+                    <a href="#" class="link-more">Leer más →</a>
+                </article>
+
+                <article class="news-card">
+                    <h3>Entrevista con Autor Hiromu Arakawa</h3>
+                    <p>Hablamos sobre la inspiración detrás de su obra.</p>
+                    <a href="#" class="link-more">Leer más →</a>
+                </article>
+            </div>
+        </section>
+        <!-- ABOUT / contact section-->
+
+        <section id="about" class="about-section">
+            <div class="container section-header">
+                <h2>Sobre MangaHub</h2>
+                <p>Un espacio para fans y coleccionistas de manga.</p>
+            </div>
+
+            <div class="container about-grid">
+                <div>
+                    <h3>Misión</h3>
+                    <p>Ofrecer reseñas, Novedades y un catálogo visual para descubrir nuevos títulos.</p>
+                </div>
+                <div>
+                    <h3>Contacto</h3>
+                    <p>Escríbenos:Mangahub@gmain.com </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!--FOOTER-->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <a href="#" class="brand">MangaHub</a>
+                <p>© <span id="year"></span> MangaHub.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul class="footer-links">
+                    <li><a href="#catalog">Catálogo</a></li>
+                    <li><a href="#news">Novedades</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="https://x.com/?lang=es" aria-label="twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for gallery -->
+    <div class="modal" id="image-modal" aria-hidden="true" hidden>
+        <div class="modal-content" role="dialog" aria-modal="true">
+            <button class="modal-close" id="modal-close" aria-label="cerrar"><i class="fa-solid fa-xmark"></i></button>
+            <img id="modal-image" src="" alt="" />
+            <h3 id="modal-title"></h3>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/3d130f6cbd.js" crossorigin="anonymous"></script>
+    <script src="js/script.js" defer></script>
+</body>
+
+</html>

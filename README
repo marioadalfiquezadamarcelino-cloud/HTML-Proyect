@@ -1,0 +1,30 @@
+#MangaHub
+
+## Título
+MangaHub — Web responsive de catálogo de mangas
+
+## Descripción
+MangaHub es una maqueta de sitio web responsivo de una sola página dedicada a los fanáticos del manga. Incluye:
+- Encabezado y pie de página responsivos (3 puntos de interrupción).
+- Galería con al menos 10 imágenes diferentes.
+- Al menos 3 secciones de contenido (home hero, catálogo, noticias, acerca de).
+- Efectos de desplazamiento e interactividad de JavaScript (alternar menú, filtro de búsqueda, visor modal).
+- Íconos solo a través de Font Awesome.
+
+**Nota de idioma:** Los archivos orientados al desarrollador (código, comentarios, variables) están en inglés. El contenido visible está en español según sea necesario.
+
+## Inspiración
+Inspiración del diseño tomada de este tiro de Dribbble:  
+https://dribbble.com/shots/25720487-Dashboard-for-an-Education-Product-Golf-Pro
+
+## Cómo ejecutar
+1. Clona este repositorio.
+2. Abra `index.html` en cualquier navegador moderno.
+3. (Opcional) Valide HTML con las herramientas del W3C y ejecute la extensión VSCode Web Validator proporcionada.
+
+## Agradecimientos
+- Imágenes de picsum.photos utilizadas como marcadores de posición.
+- Fuente impresionante para iconos.
+
+## Autor
+Mario Adalfi Quezada Marcelino
