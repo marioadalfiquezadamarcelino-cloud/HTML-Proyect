@@ -34,14 +34,14 @@ body {
   background:linear-gradient(90deg,#4b1717cc,#f0f4ffcc);
   position:sticky;
   top:0;
-  z-index:50;
+  z-index:50; 
   box-shadow:0 2px 8px rgba(10,10,10,0.03);
 }
 .header-inner {
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:14px 0;
+  padding:14px 0; /*Espacio interno*/
 }
 .brand {
   font-weight:700;
@@ -90,9 +90,11 @@ body {
 }
 
 /* search */
+
 .search-bar { padding:8px 0; }
+/*El campo de texto dentro del buscador*/
 .search-bar input[type="search"]{
-  width:100%;
+  width:100%;/*ocupa todo el ancho del contenedor*/
   padding:10px 12px;
   border-radius:8px;
   border:1px solid #e6e6e6;
@@ -124,10 +126,10 @@ body {
   background:var(--accent);
   color:hsl(0, 0%, 100%);
   padding:10px 16px;
-  border-radius:10px;
+  border-radius:10px; /*bordes redondeados */
   text-decoration:none;
   font-weight:700;
-  box-shadow:0 6px 18px rgba(180, 52, 52, 0.15);
+  box-shadow:0 6px 18px rgba(180, 52, 52, 0.15);/* sombra sutil*/
 }
 .hero-card { 
   width:420px; 
@@ -142,7 +144,7 @@ body {
 
 /* SECTION headers */
 .section-header { 
-  text-align:left; 
+  text-align:left; /*centrado horinzontalmente*/
   padding:26px 0 10px 0; }
 .section-header h2 { 
   margin:0; 
@@ -167,7 +169,7 @@ body {
   overflow:hidden;
   box-shadow:0 6px 18px rgba(8,8,8,0.04);
   cursor:pointer;
-  transform:translateY(0);
+  transform:translateY(0); /* para centrarlo de forma exacta*/
   transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms;
   display:flex;
   flex-direction:column;
@@ -192,7 +194,7 @@ body {
 .gallery-item:focus {
   transform:translateY(-8px) scale(1.02) rotate(-0.4deg);
   box-shadow:0 18px 40px rgba(0,0,0,0.12);
-  outline: none;
+  outline: none;/* sin border al hacer click */
 }
 
 /* NEWS */
@@ -252,10 +254,11 @@ body {
   align-items:center;
   justify-content:center;
   background:rgba(2,6,23,0.6);
-  z-index:200;
+  z-index:200; /* se muestra por encima del resto del contenido */
   padding:20px;
  
 }
+/*Cuando tiene el atributo hidden se oculta*/
 .modal[hidden] {
   display: none;
 }
@@ -264,7 +267,7 @@ body {
   background:var(--card);
  border-radius: var(--radius);
   padding:20px;
-  max-width:800px;
+  max-width:800px; /* no pasa de 800 pixeles*/
   width:100%;
   position:relative;
   text-align:center;
@@ -279,10 +282,10 @@ body {
 .modal-close {
   position:absolute;
   right:12px;
-  top:12px;
+  top:12px;/*lo coloca cerca de la parte superior*/
   background:rgb(250, 247, 247);
-  border:none;
-  font-size:1.05rem;
+  border:none;/*sin borde al hacer click*/
+  font-size:1.05rem; /*tamaño del texto */
   cursor:pointer;
 }
 

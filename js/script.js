@@ -48,6 +48,7 @@ class ModalViewer {
 /* DOM ready */
 document.addEventListener('DOMContentLoaded', function () {
   // header elements
+  // Referencia a los elementos del DOM
   const hamburger = document.getElementById('hamburger');
   const mainNav = document.getElementById('main-nav');
   const searchBtn = document.getElementById('search-btn');
@@ -67,12 +68,13 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // search toggle
+  //Cuando haces clic en el botón del búsqueda
   searchBtn.addEventListener('click', function () {
     const isHidden = searchBar.hasAttribute('hidden');
     if (isHidden) {
-      searchBar.removeAttribute('hidden');
+      searchBar.removeAttribute('hidden'); // muestra el buscador
     } else {
-      searchBar.setAttribute('hidden', '');
+      searchBar.setAttribute('hidden', '');// Lo oculta
     }
   });
 
@@ -102,14 +104,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // simple search filter (client-side)
   const searchInput = document.getElementById('search-input');
+//cuando se escribe en el campo de búsqueda
   searchInput.addEventListener('input', function (e) {
-    const q = e.target.value.trim().toLowerCase();
-    const items = galleryGrid.querySelectorAll('.gallery-item');
+    const q = e.target.value.trim().toLowerCase();// texto en minúculas
+    const items = galleryGrid.querySelectorAll('.gallery-item'); // mangas de la galeria
     items.forEach(item => {
       const title = (item.getAttribute('data-title') || '').toLowerCase();
       const author = (item.querySelector('.gallery-meta p')?.textContent || '').toLowerCase();
       const match = title.includes(q) || author.includes(q);
-      item.style.display = match || q === '' ? '' : 'none';
+      item.style.display = match || q === '' ? '' : 'none';// muestra o oculta
     });
   });
 });
