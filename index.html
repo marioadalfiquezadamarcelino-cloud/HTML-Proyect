@@ -19,13 +19,14 @@
           <li><a href="#home">Inicio</a></li>
           <li><a href="#catalog">Catálogo</a></li>
           <li><a href="#news">Novedades</a></li>
+          <li><a href="#form-section">Añadir manga</a></li>
           <li><a href="#about">Sobre</a></li>
         </ul>
       </nav>
 
 
       <div class="header-actions">
-        <!--Botón del buscardor-->
+        
         <button class="icon-btn" id="search-btn" aria-label="buscar"><i
             class="fa-solid fa-magnifying-glass"></i></button>
         <button class="hamburger" id="hamburger" aria-label="menu">
@@ -34,14 +35,14 @@
           <span class="hamburger-line"></span>
         </button>
       </div>
-    </div>
-    <!--small search area (togglable)-->
-    <!--Barra de búsqueda (oculta al inicio)-->
-    <div class="search-bar" id="search-bar" hidden>
-      <div class="container">
-        <input type="search" id="search-input" placeholder="Buscar mangas, autores..." />
+      </button>
+
+      <!--small search area (togglable)-->
+      <div class="search-bar" id="search-bar" hidden>
+        <div class="container">
+          <input type="search" id="search-input" placeholder="Buscar mangas, autores..." />
+        </div>
       </div>
-    </div>
   </header>
 
   <main>
@@ -55,7 +56,7 @@
 
         </div>
         <div class="hero-card">
-          <img src="img/ytee45-d3s3-hero45e-feresxc4.jpg" alt="manga hero" />
+          <img src="img/Boku no Hero Academia Logo.jpg" alt="manga hero" />
 
 
         </div>
@@ -75,7 +76,7 @@
 
         <article class="gallery-item" tabindex="0"
           data-src="https://i.pinimg.com/736x/39/90/d9/3990d9a269712084403bd71e4a07563c.jpg" data-tittle="Manga #1">
-          <img src="img/rtee34-trf3d-r4we4-fdxee3-sdsesx.jpg" alt="Manga 1">
+          <img src="img/Tokyo Ghoul Television Show Season 2 at Tonyajohnson.jpg">
           <div class="gallery-meta">
             <h3>Tokyo Ghoul #1</h3>
             <p>Autor: Sui Ishida</p>
@@ -84,16 +85,16 @@
 
         <article class="gallery-item" tabindex="0"
           data-src="https://i.pinimg.com/736x/26/4e/c9/264ec9d43fb4c2c4fbc0a976b42cb05a.jpg" data-tittle="Manga #2">
-
-          <img src="img/gti54d-r4dsd2-ffe244-erde3d5-45efre3.jpg" alt="Manga 2" class="gallery-meta">
-          <h3>Fullmetal Alchemist #2</h3>
-          <p>Autor: Hiromu Arakawa</p>
-
+          <img src="img/Fullmetal Alchemist (Original Series) - fab faux poster created by gossymer.jpg" alt="Manga 2">
+          <div class="gallery-meta">
+            <h3>Fullmetal Alchemist #2</h3>
+            <p>Autor: Hiromu Arakawa</p>
+          </div>
         </article>
 
         <article class="gallery-item" tabindex="0"
           data-src="https://i.pinimg.com/736x/81/c7/9c/81c79cb8cfcb320fb7890403fc9bc81d.jpg" data-tittle="Manga #3">
-          <img src="img/kimetsu-no-yaiba.jpg" alt="Manga 3">
+          <img src="img/Kimetsu no Yaiba.jpg" alt="Manga 3">
           <div class="gallery-meta">
             <h3>Kimetsu no yaiba #3</h3>
             <p>Autor: Koyoharu Gotouge</p>
@@ -111,7 +112,7 @@
 
         <article class="gallery-item" tabindex="0"
           data-src="https://i.pinimg.com/736x/ec/2d/c9/ec2dc9d709fb63ae1172950a1b5530f2.jpg" data-tittle="Manga #5">
-          <img src="img/one-piece.jpg" alt="Manga 5">
+          <img src="img/One piece.jpg" alt="Manga 5">
           <div class="gallery-meta">
             <h3>One piece #5</h3>
             <p>Autor: Eiichirō Oda</p>
@@ -129,7 +130,8 @@
 
         <article class="gallery-item" tabindex="0"
           data-src="https://i.pinimg.com/736x/d1/ec/56/d1ec56eaea2b1f7fb17834880083b383.jpg">
-          <img src="img/dragonball-z.jpg" alt="Manga 7">
+
+          <img src="img/Dragonball Z.jpg" alt="Manga 7">
           <div class="gallery-meta">
             <h3>Dragón Ball #7</h3>
             <p>Autor: Akira Toriyama</p>
@@ -138,7 +140,7 @@
 
         <article class="gallery-item" tabindex="0"
           data-src="https://i.pinimg.com/736x/de/97/e0/de97e0ffec6eced91f4a241429b7df6d.jpg" data-tittle="Manga #8">
-          <img src="img/code-geasslelouch-of-the.jpg" alt="Manga 8">
+          <img src="img/Code Geass-Lelouch of the….jpg" alt="Manga 8">
           <div class="gallery-meta">
             <h3>Code Geass #8</h3>
             <p>Autor: Ichirō ōkouchi</p>
@@ -206,8 +208,77 @@
         </div>
       </div>
     </section>
+
+    <!--Managenent Section (CRUD + Form)-->
+
+    <section id="manage" class="manage-section container">
+      <div class="container section-header">
+        <h2>Gestiona tu colección</h2>
+        <p>Añade, edita o elimina ,manga. Los datos guardan en tu navegador</p>
+      </div>
+
+      <div class="manage-grid">
+        <!--FORM create / edit-->
+        <form id="manga-form" class="manga-form " novalidate>
+          <h3 id=" form-title"> Añadir nuevo manga</h3>
+
+          <label form="input-title">Titulo</label>
+          <input type="text" id="input-title" name="title" placeholder="Ej: One piece Vol.1 " required />
+
+          <label for="input-author">Autor</label>
+          <input type="text" id="input-author" name="author" placeholder="Ej: Eiichiro Oda" required />
+
+          <label for="select-genre">Género</label>
+          <select id="select-genre" neme="genre" required>
+            <option value="">Selecciona un género</option>
+            <option value="shone">Shōnen</option>
+            <option value="shōjo">Shōjo</option>
+            <option value="seinen">Seinen</option>
+            <option value="joise">Josei</option>
+            <option vulue="other">Otro</option>
+          </select>
+
+
+          <label for="input-year">Año de publicación</label>
+          <input type="number" id="input-year" name="year" placeholder="Ej: 1999" min="1900" max="2025" required />
+
+          <label for="input-cover">URL de portada (opcional)</label>
+          <input type="url" id="input-cover" name="cover" placeholder="https://..." />
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" id="form-submit">Añadir</button>
+            <button type="button" id="form-cancel" class="btn-secondary" hidden></button>
+          </div>
+
+          <ul id="form-errors" class="form-errors" aria-live="polite"></ul>
+        </form>
+        <!-- LIST: read /uipdate / delate-->
+        <div class=" list-panel">
+          <h3>Listado de mangas</h3>
+          <div id="manga-list" class="manga-list"><!--item will injected here-->
+          </div>
+
+          <div class="list-actions">
+            <button id="clear-storage" class="btn-danger"><l class="fa-solid fa-trash"></l> Borrar todo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--PARALLAX SECTION (optinal visual)-->
+    <section id="parallax" class="parallax-section">
+      <div class="parallax-layer parallax-bg " data-speed="0.1"></div>
+      <div class="parallax-layer parallax-mid" data-speed="8.0"></div>
+       
+      <div class="parallax-content container">
+        <h2>La cultura del manga</h2>
+        <h3>Explora la historia y las grandes obras que marcaron geneciones.</h3>
+      </div>
+    </section>
+
   </main>
   <!--FOOTER-->
+
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-col">
@@ -221,6 +292,7 @@
           <li><a href="#catalog">Catálogo</a></li>
           <li><a href="#news">Novedades</a></li>
           <li><a href="#about">Sobre</a></li>
+
         </ul>
       </div>
 
@@ -238,12 +310,13 @@
   <div class="modal" id="image-modal" aria-hidden="true" hidden>
     <div class="modal-content" role="dialog" aria-modal="true">
       <button class="modal-close" id="modal-close" aria-label="cerrar"><i class="fa-solid fa-xmark"></i></button>
-      <img id="modal-image" src="img/ff777gf-4fgfd45dc-fd4fd5-1cddfd51-dfd1sa5.jpg" alt="MangaHub" />
+      <img id="modal-image" src="" alt="" />
       <h3 id="modal-title"></h3>
     </div>
   </div>
-
+  <!--Modal and other UI from previous template could remain-->
   <script src="https://kit.fontawesome.com/3d130f6cbd.js" crossorigin="anonymous"></script>
+
   <script src="js/script.js" defer></script>
 </body>
 

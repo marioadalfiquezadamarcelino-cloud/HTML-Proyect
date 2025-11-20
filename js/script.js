@@ -1,119 +1,317 @@
+/* script.js
+   - JS class names in PascalCase
+   - variables and functions in camelCase
+   - constants in UPPER_SNAKE
+*/
 
 /* Constants */
-const DEFAULT_IMAGE_SIZE = 800;
+const STORAGE_KEY = 'mangahub_collection_v1';
 
-/* Class to manage modal viewer */
-class ModalViewer {
-  constructor(modalId) {
-    this.modal = document.getElementById(modalId);
-    this.modalImage = this.modal.querySelector('#modal-image');
-    this.modalTitle = this.modal.querySelector('#modal-title');
-    this.closeBtn = this.modal.querySelector('#modal-close');
-    this._bindEvents();
+/* Simple utility to create DOM elements */
+function createElement(tag, props = {}, children = []) {
+  const el = document.createElement(tag);
+  Object.keys(props).forEach(k => {
+    if (k === 'class') el.className = props[k];
+    else if (k === 'dataset') {
+      Object.entries(props[k]).forEach(([dKey, dVal]) => el.dataset[dKey] = dVal);
+    } else el.setAttribute(k, props[k]);
+  });
+  children.forEach(ch => {
+    if (typeof ch === 'string') el.appendChild(document.createTextNode(ch));
+    else el.appendChild(ch);
+  });
+  return el;
+}
+
+/* Class to manage storage (CRUD persistence) */
+class StoreManager {
+  static loadAll() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.error('Failed to parse storage JSON', err);
+      return [];
+    }
   }
 
-  _bindEvents() {
-
-    this.closeBtn.addEventListener('click', () => this.close());
-    this.modal.addEventListener('click', (e) => {
-      if (e.target === this.modal) this.close();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !this.modal.hasAttribute('hidden')) this.close();
-    });
-
+  static saveAll(list) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
   }
 
-  open(imgSrc, titleText) {
-
-    this.modalImage.src = imgSrc;
-    this.modalTitle.textContent = titleText || '';
-    this.modal.hidden = false;
-    this.modal.removeAttribute('aria-hidden');
-    document.body.style.overflow = 'hidden';
-
+  static add(item) {
+    const list = StoreManager.loadAll();
+    list.unshift(item); // add to top
+    StoreManager.saveAll(list);
   }
 
-  close() {
-   
-    this.modal.hidden = true;
-    this.modal.setAttribute('aria-hidden', 'true');
-    this.modalImage.src = '';
-    this.modalTitle.textContent = '';
-    document.body.style.overflow = '';
+  static update(id, newItem) {
+    const list = StoreManager.loadAll();
+    const index = list.findIndex(i => i.id === id);
+    if (index >= 0) {
+      list[index] = newItem;
+      StoreManager.saveAll(list);
+    }
+  }
 
+  static remove(id) {
+    let list = StoreManager.loadAll();
+    list = list.filter(i => i.id !== id);
+    StoreManager.saveAll(list);
+  }
+
+  static clear() {
+    localStorage.removeItem(STORAGE_KEY);
   }
 }
 
-/* DOM ready */
-document.addEventListener('DOMContentLoaded', function () {
-  // header elements
-  // Referencia a los elementos del DOM
-  const hamburger = document.getElementById('hamburger');
-  const mainNav = document.getElementById('main-nav');
-  const searchBtn = document.getElementById('search-btn');
-  const searchBar = document.getElementById('search-bar');
-  const yearEl = document.getElementById('year');
+/* App class: handles UI and form validation */
+class App {
+  constructor() {
+    // DOM refs
+    this.form = document.getElementById('manga-form');
+    this.inputTitle = document.getElementById('input-title');
+    this.inputAuthor = document.getElementById('input-author');
+    this.selectGenre = document.getElementById('select-genre');
+    this.inputYear = document.getElementById('input-year');
+    this.inputCover = document.getElementById('input-cover');
+    this.formErrors = document.getElementById('form-errors');
+    this.formTitle = document.getElementById('form-title');
+    this.formSubmit = document.getElementById('form-submit');
+    this.formCancel = document.getElementById('form-cancel');
 
+    this.listEl = document.getElementById('manga-list');
+    this.clearStorageBtn = document.getElementById('clear-storage');
 
-  // set year
-  const currentYear = new Date().getFullYear();
-  yearEl.textContent = currentYear;
+    // editing state
+    this.editingId = null;
 
-  // mobile menu toggle
-  hamburger.addEventListener('click', function () {
-    const isOpen = mainNav.style.display === 'block';
-    mainNav.style.display = isOpen ? 'none' : 'block';
-    hamburger.setAttribute('aria-expanded', String(!isOpen));
-  });
+    this._bindEvents();
+    this.renderList();
+    this._initHeaderUI(); // existing header behaviours (year, search, menu)
+  }
 
-  // search toggle
-  //Cuando haces clic en el botón del búsqueda
-  searchBtn.addEventListener('click', function () {
-    const isHidden = searchBar.hasAttribute('hidden');
-    if (isHidden) {
-      searchBar.removeAttribute('hidden'); // muestra el buscador
-    } else {
-      searchBar.setAttribute('hidden', '');// Lo oculta
-    }
-  });
-
-  // gallery modal behavior
-  const galleryGrid = document.getElementById('gallery-grid');
-  const modalViewer = new ModalViewer('image-modal');
-
-  // delegation: open modal when clicking item or pressing Enter
-  galleryGrid.addEventListener('click', function (e) {
-    let item = e.target.closest('.gallery-item');
-    if (!item) return;
-    const src = item.getAttribute('data-src') || item.querySelector('img').src;
-    const title = item.getAttribute('data-title') || '';
-    modalViewer.open(src, title);
-  });
-
-  // keyboard accessibility: open on Enter
-  galleryGrid.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-      let item = e.target.closest('.gallery-item');
-      if (!item) return;
-      const src = item.getAttribute('data-src') || item.querySelector('img').src;
-      const title = item.getAttribute('data-title') || '';
-      modalViewer.open(src, title);
-    }
-  });
-
-  // simple search filter (client-side)
-  const searchInput = document.getElementById('search-input');
-//cuando se escribe en el campo de búsqueda
-  searchInput.addEventListener('input', function (e) {
-    const q = e.target.value.trim().toLowerCase();// texto en minúculas
-    const items = galleryGrid.querySelectorAll('.gallery-item'); // mangas de la galeria
-    items.forEach(item => {
-      const title = (item.getAttribute('data-title') || '').toLowerCase();
-      const author = (item.querySelector('.gallery-meta p')?.textContent || '').toLowerCase();
-      const match = title.includes(q) || author.includes(q);
-      item.style.display = match || q === '' ? '' : 'none';// muestra o oculta
+  _bindEvents() {
+    this.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.handleSubmit();
     });
+    this.formCancel.addEventListener('click', () => this.resetForm());
+    this.clearStorageBtn.addEventListener('click', () => {
+      if (confirm('¿Borrar toda la colección?')) {
+        StoreManager.clear();
+        this.renderList();
+      }
+    });
+  }
+
+  /* Validate form fields using JS only */
+  validateForm() {
+    const errors = [];
+    const title = this.inputTitle.value.trim();
+    const author = this.inputAuthor.value.trim();
+    const genre = this.selectGenre.value;
+    const yearVal = this.inputYear.value.trim();
+    const cover = this.inputCover.value.trim();
+
+    if (!title) errors.push('El título es obligatorio.');
+    if (!author) errors.push('El autor es obligatorio.');
+    if (!genre) errors.push('Selecciona un género.');
+    if (!yearVal) errors.push('El año es obligatorio.');
+    else {
+      const year = Number(yearVal);
+      if (Number.isNaN(year) || year < 1900 || year > 2030) errors.push('El año debe estar entre 1900 y 2030.');
+    }
+    if (cover) {
+      // Basic URL pattern test
+      try {
+        const url = new URL(cover);
+        // Accept only http/https
+        if (!['http:', 'https:'].includes(url.protocol)) errors.push('La URL de la portada debe usar http o https.');
+      } catch (err) {
+        errors.push('La URL de la portada no es válida.');
+      }
+    }
+
+    return errors;
+  }
+
+  /* Handle create / update */
+  handleSubmit() {
+    const errors = this.validateForm();
+    this.formErrors.innerHTML = '';
+    if (errors.length) {
+      errors.forEach(msg => {
+        const li = createElement('li', {}, [msg]);
+        this.formErrors.appendChild(li);
+      });
+      return;
+    }
+
+    const item = {
+      id: this.editingId || String(Date.now()),
+      title: this.inputTitle.value.trim(),
+      author: this.inputAuthor.value.trim(),
+      genre: this.selectGenre.value,
+      year: Number(this.inputYear.value),
+      cover: this.inputCover.value.trim() || null
+    };
+
+    if (this.editingId) {
+      // update
+      StoreManager.update(this.editingId, item);
+    } else {
+      // create
+      StoreManager.add(item);
+    }
+
+    this.resetForm();
+    this.renderList();
+  }
+
+  /* Reset form to create mode */
+  resetForm() {
+    this.form.reset();
+    this.editingId = null;
+    this.formTitle.textContent = 'Añadir nuevo manga';
+    this.formSubmit.textContent = 'Añadir';
+    this.formCancel.hidden = true;
+    this.formErrors.innerHTML = '';
+  }
+
+  /* Render list from storage */
+  renderList() {
+    const items = StoreManager.loadAll();
+    this.listEl.innerHTML = '';
+    if (!items.length) {
+      this.listEl.appendChild(createElement('div', { class: 'manga-empty' }, ['No hay mangas en la colección.']));
+      return;
+    }
+
+    items.forEach(item => {
+      const thumb = createElement('img', { class: 'manga-thumb', src: item.cover || `https://picsum.photos/seed/${encodeURIComponent(item.title)}/200/300`, alt: item.title });
+      const titleEl = createElement('p', { class: 'manga-title' }, [item.title]);
+      const metaEl = createElement('div', { class: 'manga-meta' }, [`${item.author} • ${item.genre} • ${item.year}`]);
+      const info = createElement('div', { class: 'manga-info' }, [titleEl, metaEl]);
+
+      const editBtn = createElement('button', { class: 'icon-btn', title: 'Editar' }, [createElement('i', { class: 'fa-solid fa-pen' })]);
+      const delBtn = createElement('button', { class: 'icon-btn', title: 'Eliminar' }, [createElement('i', { class: 'fa-solid fa-trash' })]);
+
+      const actions = createElement('div', { class: 'manga-actions' }, [editBtn, delBtn]);
+
+      const itemEl = createElement('div', { class: 'manga-item', dataset: { id: item.id } }, [thumb, info, actions]);
+
+      // events
+      editBtn.addEventListener('click', () => this.loadIntoForm(item));
+      delBtn.addEventListener('click', () => {
+        if (confirm(`Eliminar "${item.title}"?`)) {
+          StoreManager.remove(item.id);
+          this.renderList();
+        }
+      });
+
+      this.listEl.appendChild(itemEl);
+    });
+  }
+
+  /* Load an item into form for editing */
+  loadIntoForm(item) {
+    this.editingId = item.id;
+    this.inputTitle.value = item.title;
+    this.inputAuthor.value = item.author;
+    this.selectGenre.value = item.genre;
+    this.inputYear.value = String(item.year);
+    this.inputCover.value = item.cover || '';
+    this.formTitle.textContent = 'Editar manga';
+    this.formSubmit.textContent = 'Guardar cambios';
+    this.formCancel.hidden = false;
+    // Scroll to form for clarity
+    this.form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  /* small header behaviors reused from main script */
+  _initHeaderUI() {
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('main-nav');
+    const searchBtn = document.getElementById('search-btn');
+    const searchBar = document.getElementById('search-bar');
+    const yearEl = document.getElementById('year');
+
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    if (hamburger && mainNav) {
+      hamburger.addEventListener('click', function () {
+        const isOpen = mainNav.style.display === 'block';
+        mainNav.style.display = isOpen ? 'none' : 'block';
+        hamburger.setAttribute('aria-expanded', String(!isOpen));
+      });
+    }
+
+    if (searchBtn && searchBar) {
+      searchBtn.addEventListener('click', function () {
+        const isHidden = searchBar.hasAttribute('hidden');
+        if (isHidden) searchBar.removeAttribute('hidden');
+        else searchBar.setAttribute('hidden', '');
+      });
+    }
+
+    // basic gallery search filtering (if gallery exists)
+    const galleryGrid = document.getElementById('gallery-grid');
+    const searchInput = document.getElementById('search-input');
+    if (galleryGrid && searchInput) {
+      searchInput.addEventListener('input', function (e) {
+        const q = e.target.value.trim().toLowerCase();
+        const items = galleryGrid.querySelectorAll('.gallery-item');
+        items.forEach(item => {
+          const title = (item.getAttribute('data-title') || '').toLowerCase();
+          const author = (item.querySelector('.gallery-meta p')?.textContent || '').toLowerCase();
+          const match = title.includes(q) || author.includes(q);
+          item.style.display = match || q === '' ? '' : 'none';
+        });
+      });
+    }
+
+    // parallax effect
+    this._initParallax();
+  }
+
+  /* Simple parallax using scroll and data-speed attributes */
+  _initParallax() {
+    const parallaxEl = document.getElementById('parallax');
+    if (!parallaxEl) return;
+    const layers = parallaxEl.querySelectorAll('.parallax-layer');
+
+    function onScroll() {
+      const rect = parallaxEl.getBoundingClientRect();
+      const offset = window.innerHeight - rect.top; // how much is visible
+      layers.forEach(layer => {
+        const speed = parseFloat(layer.dataset.speed) || 0.5;
+        const y = -(offset * speed * 0.08);
+        layer.style.transform = `translateY(${y}px)`;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+}
+
+/* Initialize app when DOM is ready */
+document.addEventListener('DOMContentLoaded', function () {
+  const app = new App();
+  
+document.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+
+  document.querySelectorAll(".parallax-layer").forEach(layer => {
+    const speed = layer.dataset.speed;
+
+    // Movimiento vertical + horizontal
+    const y = scrollY * (speed * 0.05);
+    const x = scrollY * (speed * 0.02);
+
+    layer.style.transform = `translate(${x}px, ${y}px)`;
   });
 });
-
+});

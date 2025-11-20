@@ -16,14 +16,49 @@ MangaHub es una maqueta de sitio web responsivo de una sola página dedicada a l
 ## Inspiración
 Inspiración del diseño tomada de este tiro de Dribbble:  
 https://dribbble.com/shots/25720487-Dashboard-for-an-Education-Product-Golf-Pro
+## "Add" button fixed
 
-## Cómo ejecutar
+El botón con id form-submit se ha conectado correctamente con:
+
+- La validación.
+
+- El sistema CRUD.
+
+- La actualización visual del listado.
+
+Ahora los mangas se añaden correctamente a la colección.
+
+## Full CRUD functionality with LocalStorage
+
+El proyecto implementa las cuatro operaciones CRUD:
+
+1. Create: añadir un nuevo manga.
+
+2. Read: cargar y mostrar la colección completa.
+
+3. Update: modificar un elemento existente.
+
+4. Delete: eliminar elementos de la colección.
+
+Todo se almacena en LocalStorage y se renderiza sin recargar la página.
+
+## Functional parallax
+
+- Implementación de un efecto Parallax real mediante JavaScript:
+
+- Cada capa usa data-speed.
+
+- El movimiento se genera con translateY() según el desplazamiento del usuario.
+
+Adaptado al diseño y temática de la web.
+
+## How to run
 1. Clona este repositorio.
 2. Abra `index.html` en cualquier navegador moderno.
 3. (Opcional) Valide HTML con las herramientas del W3C y ejecute la extensión VSCode Web Validator proporcionada.
 
-## Agradecimientos
-- Imágenes de picsum.photos utilizadas como marcadores de posición.
+## Acknowledgments
+- Imágenes de Pinteres.com utilizadas como marcadores de posición.
 - Fuente impresionante para iconos.
 
 ## Autor
