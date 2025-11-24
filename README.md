@@ -1,6 +1,4 @@
-#MangaHub
-
-## Título
+## MangaHub
 MangaHub — Web responsive de catálogo de mangas
 
 ## Descripción

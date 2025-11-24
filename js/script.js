@@ -7,7 +7,7 @@
 /* Constants */
 const STORAGE_KEY = 'mangahub_collection_v1';
 
-/* Simple utility to create DOM elements */
+/* Simple utility to create DOM elements (elements = el) */
 function createElement(tag, props = {}, children = []) {
   const el = document.createElement(tag);
   Object.keys(props).forEach(k => {
