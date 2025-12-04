@@ -7,20 +7,20 @@
 /* Constants */
 const STORAGE_KEY = 'mangahub_collection_v1';
 
-/* Simple utility to create DOM elements (elements = el) */
+/* Simple utility to create DOM elements (elements = El */
 function createElement(tag, props = {}, children = []) {
-  const el = document.createElement(tag);
+  const El = document.createElement(tag);
   Object.keys(props).forEach(k => {
-    if (k === 'class') el.className = props[k];
+    if (k === 'class') El.className = props[k];
     else if (k === 'dataset') {
-      Object.entries(props[k]).forEach(([dKey, dVal]) => el.dataset[dKey] = dVal);
-    } else el.setAttribute(k, props[k]);
+      Object.entries(props[k]).forEach(([dKey, dVal]) => El.dataset[dKey] = dVal);
+    } else El.setAttribute(k, props[k]);
   });
   children.forEach(ch => {
-    if (typeof ch === 'string') el.appendChild(document.createTextNode(ch));
-    else el.appendChild(ch);
+    if (typeof ch === 'string') El.appendChild(document.createTextNode(ch));
+    else El.appendChild(ch);
   });
-  return el;
+  return El;
 }
 
 /* Class to manage storage (CRUD persistence) */
@@ -93,8 +93,8 @@ class App {
   }
 
   _bindEvents() {
-    this.form.addEventListener('submit', (e) => {
-      e.preventDefault();
+    this.form.addEventListener('submit', (E) => {
+      E.preventDefault();
       this.handleSubmit();
     });
     this.formCancel.addEventListener('click', () => this.resetForm());
@@ -260,14 +260,14 @@ class App {
     const galleryGrid = document.getElementById('gallery-grid');
     const searchInput = document.getElementById('search-input');
     if (galleryGrid && searchInput) {
-      searchInput.addEventListener('input', function (e) {
-        const q = e.target.value.trim().toLowerCase();
+      searchInput.addEventListener('input', function (E) {
+        const Q = E.target.value.trim().toLowerCase();
         const items = galleryGrid.querySelectorAll('.gallery-item');
         items.forEach(item => {
           const title = (item.getAttribute('data-title') || '').toLowerCase();
           const author = (item.querySelector('.gallery-meta p')?.textContent || '').toLowerCase();
-          const match = title.includes(q) || author.includes(q);
-          item.style.display = match || q === '' ? '' : 'none';
+          const match = title.includes(Q) || author.includes(Q);
+          item.style.display = match || Q === '' ? '' : 'none';
         });
       });
     }
@@ -305,13 +305,42 @@ document.addEventListener("scroll", () => {
   const scrollY = window.scrollY;
 
   document.querySelectorAll(".parallax-layer").forEach(layer => {
-    const speed = layer.dataset.speed;
+    const Speed = layer.dataset.speed;
 
     // Movimiento vertical + horizontal
-    const y = scrollY * (speed * 0.05);
-    const x = scrollY * (speed * 0.02);
+    const Y = scrollY * (Speed * 0.05);
+    const X = scrollY * (Speed * 0.02);
 
-    layer.style.transform = `translate(${x}px, ${y}px)`;
+    layer.style.transform = `translate(${X}px, ${Y}px)`;
+    });
   });
 });
+
+ // ───────── ANIMACIONES CON SCROLL OBSERVER ───────── //
+
+const scrollElements = document.querySelectorAll(".scroll-anim");
+
+const options = {
+    threshold: 0.2 // Visible 20% para activarse
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+        }
+    });
+}, options);
+
+scrollElements.forEach(el => observer.observe(el));
+
+
+// ───────── PARALLAX DINÁMICO ───────── //
+
+document.addEventListener("scroll", ()=>{
+    document.querySelectorAll(".parallax-layer").forEach(layer=>{
+        let speed = layer.getAttribute("data-speed");
+        layer.style.transform = `translateY(${scrollY * speed}px)`;
+    })
 });
+
