@@ -48,7 +48,7 @@ Todo se almacena en LocalStorage y se renderiza sin recargar la página.
 
 - El movimiento se genera con translateY() según el desplazamiento del usuario.
 
-## Animaciones & Efectos Visuales
+## Animaciones y efectos visuales
 
 - Scroll-Animations: cada sección con clase scroll-reveal aparece con efecto suave al hacer scroll.
 
