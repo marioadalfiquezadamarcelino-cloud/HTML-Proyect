@@ -48,7 +48,13 @@ Todo se almacena en LocalStorage y se renderiza sin recargar la página.
 
 - El movimiento se genera con translateY() según el desplazamiento del usuario.
 
-Adaptado al diseño y temática de la web.
+## Animaciones & Efectos Visuales
+
+- Scroll-Animations: cada sección con clase scroll-reveal aparece con efecto suave al hacer scroll.
+
+- Efecto parallax: la sección de fondo móvil se mueve al desplazarse, con profundidad visual.Transiciones hover en tarjetas y botones.
+
+- Animaciones CSS adicionales (según configuración) para mejorar la experiencia visual.
 
 ## How to run
 1. Clona este repositorio.
