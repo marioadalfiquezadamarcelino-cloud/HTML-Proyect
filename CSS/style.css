@@ -384,7 +384,6 @@ font-size: 1vh;
 }
 
 
-
 /*  PARALLAX  */
 .parallax.section{
 position: relative;
@@ -475,12 +474,7 @@ margin-top: 30px;
   background:#111;
   color:#fff;
   margin-top:40px;}
-
-
-
-
-
-
+  
 /* Responsive adjutments */
 
 @media (max-width:900px){
@@ -613,7 +607,7 @@ margin-top: 30px;
   .main-nav { display:block; }
   .hamburger { display:none; }
   .about-section {text-align: center;}
-  .section-header {text-align: center;}
+  .section-header {text-align: left;}
 }
 
 /* Desktop */
@@ -622,3 +616,4 @@ margin-top: 30px;
   .hero-text h1 { font-size:2.6rem; }
   .container { width:90%; }
 }
+
